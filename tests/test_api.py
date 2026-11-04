@@ -1,29 +1,60 @@
+
 from fastapi.testclient import TestClient
+
 from app.api.main import app
-client = TestClient(app)
+
+TEST_API_KEY = "test-secret"
+
 def test_health():
-    response = client.get("/health")
+    with TestClient(app) as client:
+        response = client.get("/health")
+
     assert response.status_code == 200
     assert response.json()["status"] == "healthy"
-def test_intents():
-    response = client.get("/api/v1/intents")
+
+
+def test_classify(monkeypatch):
+    monkeypatch.setenv("API_KEY", TEST_API_KEY)
+    with TestClient(app) as client:
+        response = client.post(
+            "/api/v1/classify",
+            json={
+                "message": "My iPhone battery is draining really quickly"
+            },
+            headers={"X-API-Key" : TEST_API_KEY}
+        )
+
     assert response.status_code == 200
-    assert "battery_charging" in response.json()["intents"]
-def test_classify():
-    response = client.post(
-        "/api/v1/classify",
-        json={
-            "message": "My iPhone battery is draining really quickly"
-        },
-    )
-    assert response.status_code == 200
+
     data = response.json()
-    assert "intent" in data
-    assert "confidence" in data
+
+    assert data["intent"] == "battery_charging"
     assert 0 <= data["confidence"] <= 1
-def test_invalid_message():
-    response = client.post(
-        "/api/v1/classify",
-        json={"message": ""},
-    )
+
+
+def test_invalid_request(monkeypatch):
+    monkeypatch.setenv("API_KEY", TEST_API_KEY)
+    with TestClient(app) as client:
+        response = client.post(
+            "/api/v1/classify",
+            json={
+                "message": ""
+            },
+            headers={"X-API-Key" : TEST_API_KEY}
+        )
     assert response.status_code == 422
+def test_whitespace_message(monkeypatch):
+    monkeypatch.setenv("API_KEY", TEST_API_KEY)
+    with TestClient(app) as client:
+        response = client.post(
+            "/api/v1/classify",
+            json={"message": "     "}, headers={"X-API-Key" : TEST_API_KEY}
+        )
+
+    assert response.status_code == 422
+def test_readiness():
+    with TestClient(app) as client:
+        response = client.get("/ready")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "ready"

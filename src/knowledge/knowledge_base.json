@@ -1,0 +1,68 @@
+{
+  "entries" : 
+  [
+    {
+      "id": "APPLE-BAT-001",
+      "product": "iPhone",
+      "intent": "battery_charging",
+      "topic": "Check battery usage",
+      "keywords": [
+        "battery draining",
+        "battery drain",
+        "battery usage",
+        "apps consuming battery",
+        "background activity"
+      ],
+      "guidance": [
+        "Open Settings and tap Battery.",
+        "Review the battery usage information and identify apps or system activities consuming battery.",
+        "Check whether an app has unusually high background activity.",
+        "Consider whether low cellular signal or notifications contribute to battery usage."
+      ],
+      "source": "https://support.apple.com/en-in/120745",
+      "verification_status": "verified"
+    },
+    {
+      "id": "APPLE-BAT-002",
+      "product": "iPhone",
+      "intent": "battery_charging",
+      "topic": "Understand battery health",
+      "keywords": [
+        "battery health",
+        "maximum capacity",
+        "battery condition",
+        "battery aging",
+        "battery service"
+      ],
+      "guidance": [
+        "Open Settings and tap Battery.",
+        "On iPhone 14 and earlier, select Battery Health & Charging.",
+        "On iPhone 15 and later, select Battery Health.",
+        "Review maximum capacity and any service recommendations displayed.",
+        "If a service recommendation appears, consider contacting Apple Support."
+      ],
+      "source": "https://support.apple.com/en-ie/guide/iphone/iphd453d043a/27/ios/27",
+      "verification_status": "verified"
+    },
+    {
+      "id": "APPLE-BAT-003",
+      "product": "iPhone",
+      "intent": "battery_charging",
+      "topic": "Understand Low Power Mode",
+      "keywords": [
+        "low power mode",
+        "battery saving",
+        "reduce battery consumption",
+        "battery mode"
+      ],
+      "guidance": [
+        "Low Power Mode reduces power consumption by limiting certain background activities and features.",
+        "On iPhone 14 and earlier, open Settings, tap Battery, and select Low Power Mode.",
+        "On iPhone 15 and later, open Settings, tap Battery, select Power Mode, and select Low Power Mode.",
+        "Low Power Mode can help extend battery life."
+      ],
+      "source": "https://support.apple.com/en-in/101604",
+      "verification_status": "verified"
+     }
+  ]
+}
